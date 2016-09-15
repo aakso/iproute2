@@ -775,17 +775,21 @@ static int netns_monitor(int argc, char **argv)
 
 int do_netns(int argc, char **argv)
 {
-	netns_map_init();
-
-	if (argc < 1)
+	if (argc < 1) {
+		netns_map_init();
 		return netns_list(0, NULL);
+	}
 
 	if ((matches(*argv, "list") == 0) || (matches(*argv, "show") == 0) ||
-	    (matches(*argv, "lst") == 0))
+	    (matches(*argv, "lst") == 0)) {
+		netns_map_init();
 		return netns_list(argc-1, argv+1);
+	}
 
-	if ((matches(*argv, "list-id") == 0))
+	if ((matches(*argv, "list-id") == 0)) {
+		netns_map_init();
 		return netns_list_id(argc-1, argv+1);
+	}
 
 	if (matches(*argv, "help") == 0)
 		return usage();
